@@ -120,7 +120,7 @@ SecureLocker/
 
 This section walks through everything that happens, from the moment the device is powered on to the locker closing again — in plain language, no code required to follow along.
 
-<img src="" alt="Photo" width="500">
+<img src="Hardware Image/Project Workflow/IMG-20260806-WA0010.jpg" alt="Photo" width="500">
 
 ### 1️⃣ Power On & Initialization
 The moment power is applied, the LPC2148 configures its clock (PLL), then initializes every peripheral it needs: the LCD, UART (both the debug port and the Bluetooth port), the I2C bus (for EEPROM), the RTC, the keypad, the motor driver, and the buzzer. If this is the very first boot ever, the system also writes the factory-default passwords (`1234` for Bluetooth, `5678` for keypad) into EEPROM so they survive future power cycles.
