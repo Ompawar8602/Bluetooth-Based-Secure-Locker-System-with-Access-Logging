@@ -116,7 +116,7 @@ SecureLocker/
 
 ## 🔄 System Workflow
 
-<img src="" alt="Photo" width="500">
+<img src="Hardware Image/Project Workflow/IMG-20260806-WA0010.jpg" alt="Photo" width="500">
 
 ---
 
