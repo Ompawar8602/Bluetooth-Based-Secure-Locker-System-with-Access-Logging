@@ -111,8 +111,7 @@ SecureLocker/
 ---
 
 ## 🔌 Hardware Block Diagram
-
-![Hardware Block Diagram](images/hardware-block-diagram.jpg)
+<img src="Hardware Image/Project Workflow/BlockDiagram.jpg" alt="Photo" width="500">
 
 ---
 
