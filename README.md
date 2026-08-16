@@ -105,8 +105,7 @@ SecureLocker/
 ---
 
 ## 🏗️ Software Architecture
-
-![Software Architecture](images/software-architecture.jpg)
+Hardware Image/Project Workflow/IMG-20260806-WA0011.jpg
 
 ---
 
