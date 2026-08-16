@@ -105,7 +105,7 @@ SecureLocker/
 ---
 
 ## 🏗️ Software Architecture
-Hardware Image/Project Workflow/IMG-20260806-WA0011.jpg
+<img src="Hardware Image/Project Workflow/IMG-20260806-WA0011.jpg" alt="Photo" width="500">
 
 ---
 
@@ -116,7 +116,7 @@ Hardware Image/Project Workflow/IMG-20260806-WA0011.jpg
 
 ## 🔄 System Workflow
 
-![System Workflow](images/system-workflow.jpg)
+<img src="" alt="Photo" width="500">
 
 ---
 
