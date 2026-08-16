@@ -165,19 +165,89 @@ If an alarm time has been set via the admin menu, the system checks the RTC on e
 ---
 ##  Software Architecture 
 
-<img src="" alt="Photo" width="500">
+<img src="Hardware Image/Project Workflow/IMG-20260806-WA0011.jpg" alt="Photo" width="500">
+
+## 🧩 Software Architecture
+
+The firmware is organized into clean, layered modules — each with a single responsibility — rather than one large file, which makes the code easier to debug, extend, and reuse.
+
+**Application Layer** (`projectmain.c`)
+The entry point and orchestrator. It initializes every peripheral at boot, then runs the main loop that sequences the entire two-factor authentication flow: waiting for a Bluetooth password, prompting for the keypad password, and triggering the motor once both are verified. It also continuously checks for tamper events, admin button presses, and alarm conditions on every loop pass.
+
+**Logic / Service Layer** (`security.c`, `menu.c`)
+- `security.c` handles tamper detection (debouncing and edge-checking the tamper switch), writes default passwords to EEPROM on first boot, and provides the shared event-logging function used everywhere else in the codebase.
+- `menu.c` implements the entire admin menu system — clock setting, alarm configuration, and password changes — all driven by the keypad and displayed on the LCD.
+
+**Driver Layer** (one file per peripheral)
+Each hardware component gets its own small, focused driver: `bluetooth.c` (UART1 + interrupt-driven ring buffer for HC-05), `keypad.c` (4×4 matrix scanning), `lcd.c` (4-bit LCD control), `eeprom.c` (I2C read/write for the AT24C256), `rtc.c` (on-chip real-time clock), `motor.c` (L293D forward/reverse/stop), `buzzer.c` (on/off and alert patterns), and `uart.c` (UART0 debug output). None of these files know anything about the *application's* logic — they only know how to talk to their specific piece of hardware.
+
+**Why it's structured this way**
+This layering means the application logic never talks to hardware registers directly — it always goes through a driver. If the LCD were swapped for a different display, only `lcd.c` would need to change; `projectmain.c`, `menu.c`, and everything else would be untouched. It also makes the code far easier to test and reason about in isolation, since each file has one clear job.
+
+## 🔐 Security Architecture
+
+Security in this system isn't a single check — it's layered across multiple independent mechanisms, so no single point of failure grants access.
+
+**Two-Factor Design**
+Access requires two separate credentials over two separate channels: a wireless password (Bluetooth) and a physical password (keypad). Compromising one alone isn't enough — an attacker would need both the phone-side password *and* physical access to the keypad.
+
+**Persistent, Non-Volatile Credentials**
+Passwords are never hardcoded in a way that resets on power loss. They live in an AT24C256 EEPROM over I2C, written once with factory defaults on first boot and updatable only through the authenticated admin menu.
+
+**Tamper-Evident Enclosure**
+A dedicated tamper switch is monitored continuously, independent of the authentication flow. Any unauthorized attempt to open the enclosure — even without touching the keypad or Bluetooth — triggers an immediate alert and is logged.
+
+**Full Audit Trail**
+Every event (successful or failed login, tamper trigger, admin access, password change, locker open/close) is timestamped using the on-chip RTC and streamed over UART, so there's always a verifiable record of exactly what happened and when — not just whether the locker is currently open or closed.
+
+**Fail-Safe Defaults**
+If EEPROM is ever blank or corrupted (e.g., a brand-new chip), the system detects this via a magic marker check and automatically re-initializes safe factory-default passwords rather than failing open or leaving the system in an undefined state.
+
+---
+
+## 📡 Communication Protocol
+
+**Bluetooth (Level-1 password)**
+The HC-05 module communicates with the LPC2148 over UART1 at 9600 baud. The phone-side app sends the password as plain digits terminated by `#` (e.g. `1234#`). The `#` character marks the end of the command, so the firmware knows exactly when a full password has arrived — the module receives characters continuously into a ring buffer via interrupt, meaning no bytes are lost even if the CPU is momentarily busy elsewhere.
+
+**Keypad (Level-2 password)**
+The 4×4 matrix keypad is read using a row/column scanning technique: each row is driven low in turn while the columns are checked for a matching low signal, identifying exactly which key was pressed. Digits are masked with `*` on the LCD as they're typed, for basic shoulder-surfing protection.
+
+**PC Audit Log (UART0)**
+A separate UART0 channel, independent of the Bluetooth link, streams a human-readable log line for every system event. Connected to a laptop via a USB-to-TTL converter, this can be viewed live in any serial terminal — useful both for development/debugging and as a genuine access-log record.
+
 
 ---
 
 ## 🔌 Hardware Block Diagram
 
-<img src="" alt="Photo" width="500">
+<img src="Hardware Image/Project Workflow/BlockDiagram.jpg" alt="Photo" width="500">
 
----
+## 🧱 Hardware Architecture
 
-## 🔄 System Workflow
+The system is built around the **NXP LPC2148**, a 32-bit ARM7TDMI-S microcontroller running at 60 MHz (from a 12 MHz crystal through the on-chip PLL). All peripherals are wired to two of its GPIO ports (Port 0 and Port 1), grouped below by function.
 
-<img src="" alt="Photo" width="500">
+**Power Stage**
+A 12V DC adapter feeds a 7805 regulator to produce a stable 5V rail, which is then stepped down further to 3.3V for the LPC2148 and all logic-level peripherals. This two-stage regulation keeps the microcontroller and sensitive digital components isolated from noise on the raw 12V input.
+
+**Communication Interfaces**
+- **UART0** connects to a PC via a USB-to-TTL converter, used purely for streaming the real-time, timestamped access log to a laptop terminal.
+- **UART1** connects to the HC-05 Bluetooth module, which receives the Level-1 password wirelessly from a phone.
+- **I2C0** connects to the AT24C256 EEPROM, where both passwords and system settings are stored so they survive power loss.
+
+**Input Devices**
+- A 4×4 matrix keypad (8 GPIO lines: 4 rows, 4 columns) is used for Level-2 password entry and for navigating the admin menu.
+- A tamper switch, wired to a single GPIO pin, detects unauthorized physical access to the enclosure.
+- A dedicated admin push-button is wired to an external interrupt pin (EINT2), so it can instantly interrupt normal operation and open the admin menu.
+
+**Output Devices**
+- A 16×2 character LCD (driven in 4-bit mode over 6 GPIO lines) displays live system status, prompts, and alerts.
+- A DC motor, driven through an L293D H-bridge, physically locks and unlocks the locker.
+- A buzzer provides audible feedback for tamper alerts, access denial, and alarm triggers.
+- Optional status LEDs can be added on spare GPIO pins for a visual "locked/unlocked" indicator.
+
+**Design Rationale**
+Splitting authentication across two physically separate channels (Bluetooth over UART1, keypad over GPIO) means an attacker would need to compromise both a wireless connection and physical proximity to gain access — this is the core security principle behind the two-factor design. All events, whether successful or not, are logged with an RTC timestamp so there's always an audit trail of who accessed the locker and when.
 
 ---
 
