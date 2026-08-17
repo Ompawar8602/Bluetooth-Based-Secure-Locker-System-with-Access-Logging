@@ -32,8 +32,7 @@
 | 🛡️ | **Tamper Detection** | Interrupt-monitored switch triggers an instant alert if the enclosure is opened |
 | 🕒 | **RTC Audit Logging** | Every event is timestamped and streamed over UART for a PC-side access log |
 | 💾 | **EEPROM Password Storage** | Passwords persist across power cycles via I2C (AT24C256) |
-| 🧑‍💻 | **Admin Configuration Menu** | Change passwords, set the clock, and configure an alarm — all on-device |
-| ⏰ | **Alarm System** | Configurable time-based alarm with buzzer alert |
+| 🧑‍💻 | **Admin Configuration Menu** | Change passwords, set the clock, and configure an alarm — all on-device 
 | 🔊 | **Audible Feedback** | Buzzer confirms tamper events, denied access, and alarm triggers |
 | 🖥️ | **LCD Status Display** | 16×2 LCD shows live system state — standby, prompts, results, alerts |
 
@@ -142,7 +141,8 @@ This section walks through everything that happens, from the moment the device i
 
 9️⃣ **Admin Mode** — Admin button opens an on-device menu to set the clock, configure the alarm, or change passwords. Auto-exits after 15s idle.
 
-🔟 **Alarm** — If configured, buzzer + LCD alert fire when RTC time matches the alarm time; stopped only via the admin menu.
+🔟 **Buzzer** — Sounds alerts for tampering, wrong passwords, system initialised.
+
 
 ---
 ##  Software Architecture 
@@ -210,7 +210,7 @@ Built around the **NXP LPC2148**, a 32-bit ARM7 microcontroller running at 60 MH
 
 - ⚙️ **DC Motor (via L293D)** — Physically locks and unlocks the locker.
 
-- 🔊 **Buzzer** — Sounds alerts for tampering, wrong passwords, or alarms.
+- 🔊 **Buzzer** — Sounds alerts for tampering, wrong passwords.
 
 **Why This Design:**
 - Two separate unlock methods (wireless + physical) mean an intruder needs both to break in — not just one.
