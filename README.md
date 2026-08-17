@@ -115,6 +115,35 @@ SecureLocker/
 
 ---
 
+# 📸 Project Images
+
+---
+
+# 📸 Hardware Prototype
+
+The hardware prototype demonstrates the complete implementation of the Bluetooth-Based Secure Locker System using the LPC2148 ARM7 microcontroller. It integrates multiple hardware peripherals to provide secure authentication, real-time monitoring, and automated locker control.
+
+### Description
+
+- LPC2148 ARM7 microcontroller acts as the central processing unit of the system.
+- HC-05 Bluetooth module enables wireless communication with a mobile device.
+- A 4×4 matrix keypad is used to enter the second-level authentication password.
+- The 16×2 LCD displays authentication prompts, system status, and user messages.
+- AT24C256 EEPROM securely stores passwords and configuration data using the I2C protocol.
+- L293D motor driver controls the DC motor for locking and unlocking the locker.
+- A buzzer generates alerts for invalid password attempts and security events.
+- The hardware design follows a modular approach, making the system reliable and easy to maintain.
+
+<p align="center">
+  <img src="" width="700"/>
+</p>
+
+<p align="center">
+<b>Figure 1.</b> Complete hardware implementation of the Bluetooth-Based Secure Locker System.
+</p>
+
+---
+
 ## 🔍 How It Works — Full System Walkthrough
 
 This section walks through everything that happens, from the moment the device is powered on to the locker closing again — in plain language, no code required to follow along.
@@ -237,7 +266,7 @@ The UART terminal provides real-time monitoring of all system activities. It rec
 - Enables real-time communication between the embedded system and a PC.
 
 <p align="center">
-  <img src="" width="700"/>
+  <img src="Hardware Image/IMG-20260817-WA0004.jpg" width="700"/>
 </p>
 
 <p align="center">
