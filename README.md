@@ -135,7 +135,7 @@ The hardware prototype demonstrates the complete implementation of the Bluetooth
 - The hardware design follows a modular approach, making the system reliable and easy to maintain.
 
 <p align="center">
-  <img src="" width="700"/>
+  <img src="Hardware Image/IMG_20260819_142900.jpg" width="700"/>
 </p>
 
 <p align="center">
