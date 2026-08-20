@@ -78,6 +78,15 @@
 > Written to EEPROM only on first boot (`"LKR1"` magic marker). Change both via the on-device admin menu.
 
 ---
+## 📐 Design Decisions
+
+Short rationale for a few key hardware/firmware choices.
+
+| Decision | Why |
+|---|---|
+| **LCD in 4-bit mode** (not 8-bit) | Uses only 6 GPIO pins (D4–D7, RS, EN) instead of 10, freeing pins for the keypad/motor/buzzer/tamper switch. Trade-off: each byte needs 2 write cycles instead of 1, but LCD writes aren't timing-critical here, so the cost is negligible. |
+
+---
 
 ## 🧑‍💻 Admin Menu
 
@@ -135,7 +144,7 @@ The hardware prototype demonstrates the complete implementation of the Bluetooth
 - The hardware design follows a modular approach, making the system reliable and easy to maintain.
 
 <p align="center">
-  <img src="Hardware Image/IMG_20260819_142900.jpg" width="700"/>
+  <img src="Hardware Image/IMG_20260819_142900.jpg" width="800"/>
 </p>
 
 <p align="center">
@@ -148,7 +157,7 @@ The hardware prototype demonstrates the complete implementation of the Bluetooth
 
 This section walks through everything that happens, from the moment the device is powered on to the locker closing again — in plain language, no code required to follow along.
 
-<img src="Hardware Image/Project Workflow/IMG-20260806-WA0010.jpg" alt="Photo" width="500">
+<img src="Hardware Image/Project Workflow/IMG-20260806-WA0010.jpg" alt="Photo" width="800">
 
 ## 🔍 How It Works — Quick Walkthrough
 
@@ -176,7 +185,7 @@ This section walks through everything that happens, from the moment the device i
 ---
 ##  Software Architecture 
 
-<img src="Hardware Image/Project Workflow/IMG-20260806-WA0011.jpg" alt="Photo" width="500">
+<img src="Hardware Image/Project Workflow/IMG-20260806-WA0011.jpg" alt="Photo" width="800">
 
 ## 🧩 Software Architecture
 
@@ -213,7 +222,7 @@ Security is layered, not a single check:
 
 ## 🔌 Hardware Block Diagram
 
-<img src="Hardware Image/Project Workflow/BlockDiagram.jpg" alt="Photo" width="500">
+<img src="Hardware Image/Project Workflow/BlockDiagram.jpg" alt="Photo" width="800">
 
 ## 🧱 Hardware Architecture
 
@@ -266,7 +275,7 @@ The UART terminal provides real-time monitoring of all system activities. It rec
 - Enables real-time communication between the embedded system and a PC.
 
 <p align="center">
-  <img src="Hardware Image/IMG-20260817-WA0004.jpg" width="700"/>
+  <img src="Hardware Image/IMG-20260817-WA0004.jpg" width="800"/>
 </p>
 
 <p align="center">
