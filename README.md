@@ -294,7 +294,7 @@ main                        ← stable, tested releases only
  │
  ├── dev                    ← integration branch for ongoing work
  │    │
- │    ├── feature/bluetooth-uart-fix     (PLL init + UART RX ring buffer fix)
+ │    ├── feature/bluetooth-uart-fix   
  │    ├── feature/tamper-detection       (EINT-based tamper switch + alerts)
  │    ├── feature/admin-menu             (CLK / Alarm / Password sub-menus)
  │    └── feature/alarm-system           (RTC-based alarm merge)
