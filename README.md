@@ -222,7 +222,7 @@ Security is layered, not a single check:
 
 ## 🔌 Hardware Block Diagram
 
-<img src="Hardware Image/Project Workflow/BlockDiagram.jpg" alt="Photo" width="800">
+<img src="" alt="Photo" width="800">
 
 ## 🧱 Hardware Architecture
 
