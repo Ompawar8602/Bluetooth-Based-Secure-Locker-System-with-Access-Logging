@@ -144,7 +144,7 @@ The hardware prototype demonstrates the complete implementation of the Bluetooth
 - The hardware design follows a modular approach, making the system reliable and easy to maintain.
 
 <p align="center">
-  <img src="Hardware Image/IMG_20260820_152834.jpg" width="800"/>
+  <img src="Hardware Image/IMG_20260820_152834.jpg" width="900"/>
 </p>
 
 <p align="center">
@@ -157,7 +157,7 @@ The hardware prototype demonstrates the complete implementation of the Bluetooth
 
 This section walks through everything that happens, from the moment the device is powered on to the locker closing again — in plain language, no code required to follow along.
 
-<img src="Hardware Image/Project Workflow/IMG-20260806-WA0010.jpg" alt="Photo" width="800">
+<img src="Hardware Image/Project Workflow/IMG-20260806-WA0010.jpg" alt="Photo" width="900">
 
 ## 🔍 How It Works — Quick Walkthrough
 
@@ -185,7 +185,7 @@ This section walks through everything that happens, from the moment the device i
 ---
 ##  Software Architecture 
 
-<img src="Hardware Image/Project Workflow/IMG-20260806-WA0011.jpg" alt="Photo" width="800">
+<img src="Hardware Image/Project Workflow/IMG-20260806-WA0011.jpg" alt="Photo" width="900">
 
 ## 🧩 Software Architecture
 
@@ -222,7 +222,7 @@ Security is layered, not a single check:
 
 ## 🔌 Hardware Block Diagram
 
-<img src="Hardware Image/Project Workflow/file_00000000efd482089e1f8b1f4f83a7ea.png" alt="Photo" width="800">
+<img src="Hardware Image/Project Workflow/file_00000000efd482089e1f8b1f4f83a7ea.png" alt="Photo" width="900">
 
 ## 🧱 Hardware Architecture
 
@@ -275,7 +275,7 @@ The UART terminal provides real-time monitoring of all system activities. It rec
 - Enables real-time communication between the embedded system and a PC.
 
 <p align="center">
-  <img src="Hardware Image/IMG-20260817-WA0004.jpg" width="800"/>
+  <img src="Hardware Image/IMG-20260817-WA0004.jpg" width="900"/>
 </p>
 
 <p align="center">
