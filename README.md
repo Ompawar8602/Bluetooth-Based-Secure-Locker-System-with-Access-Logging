@@ -275,7 +275,7 @@ The UART terminal provides real-time monitoring of all system activities. It rec
 - Enables real-time communication between the embedded system and a PC.
 
 <p align="center">
-  <img src=" " alt="Photo" width="900">
+  <img src="Hardware Image/IMG-20260817-WA0004.jpg" alt="Photo" width="900">
 </p>
 
 <p align="center">
